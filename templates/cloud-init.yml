@@ -4,9 +4,9 @@ write_files:
   - path: /root/configure_rabbitmq.sh
     content: |
         #!/usr/bin/env bash
-        rabbitmqctl add_user admin 'ilovebunnies'
+        rabbitmqctl add_user admin 'PASSWORD_VARIABLE_HERE'
         rabbitmqctl set_user_tags admin administrator
-        rabbitmqctl add_user rabbit 'ilovebunnies'
+        rabbitmqctl add_user rabbit 'PASSWORD_VARIABLE_HERE'
         rabbitmqctl add_vhost /
         rabbitmqctl set_permissions -p / admin ".*" ".*" ".*"
         rabbitmqctl set_permissions -p / rabbit ".*" ".*" ".*"
@@ -15,13 +15,13 @@ write_files:
 
   # Set cluster cookie
   - path: /var/lib/rabbitmq/.erlang.cookie
-    content: 'THISISARABBITMQCOOKIELOL'
+    content: 'COOKIE_VARIABLE_HERE'
   
   # Testing script
   - path: /root/smoke_test.sh
     content: |
       #!/usr/bin/env bash
-      curl -s -u admin:ilovebunnies -X POST -H "Content-Type: application/json" \
+      curl -s -u admin:PASSWORD_VARIABLE_HERE -X POST -H "Content-Type: application/json" \
       -d '{"properties":{},"routing_key":"hello","payload":"hello-world","payload_encoding":"string"}' \
       http://localhost:15672/api/exchanges/%2f/amq.default/publish > /tmp/smoke_test
 
