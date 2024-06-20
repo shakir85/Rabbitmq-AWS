@@ -1,11 +1,11 @@
-# Data source for private subnet CIDR blocks to build sg rules
+# Extract private subnet CIDR blocks to build sg rules
 data "aws_subnet" "private_subnets" {
   for_each = toset(var.private_subnet_ids)
 
   id = each.value
 }
 
-# Security Group for EC2 instances, should only be limited for TCP, but
+# Security Group for private EC2 instances, should only be limited for TCP, but
 # it's enabled temporarly to test pings (ICMP) and some other troubleshooting
 resource "aws_security_group" "ec2_sg" {
   name        = "ec2-communication-sg"
@@ -26,7 +26,7 @@ resource "aws_security_group" "ec2_sg" {
   }
 }
 
-# Bastion host security group `ec2_public.tf`
+# Bastion host security group, resource defined in `ec2_public.tf`
 resource "aws_security_group" "bastion_sg" {
   name        = "bastion-sg"
   description = "Allow SSH access to bastion host"

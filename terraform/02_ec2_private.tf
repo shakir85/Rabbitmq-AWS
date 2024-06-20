@@ -1,4 +1,3 @@
-# EC2 instances
 resource "aws_instance" "ec2_instance1" {
   ami               = var.ami_id
   instance_type     = var.ec2_instance_type
