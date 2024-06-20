@@ -1,0 +1,1 @@
+This role sets up a RabbitMQ cluster. All nodes will be of type `disk` nodes. It is intended for a fresh RabbitMQ installation. Running it multiple times might disrupt the cluster as RabbitMQ usually needs to forget the current cluster before joining a new one, especially if there's a mix of ram and disk nodes in the cluster.
