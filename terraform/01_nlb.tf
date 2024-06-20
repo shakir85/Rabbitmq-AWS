@@ -5,7 +5,6 @@ resource "aws_lb" "network_lb" {
   subnets            = var.public_subnet_ids
 }
 
-# NLB Target Group
 resource "aws_lb_target_group" "nlb_target_group" {
   name = "nlb-target-group"
   # RabbitMQ non-TLS client port. You need to configure TLS in /etc/rabbitmq.conf first
@@ -16,8 +15,8 @@ resource "aws_lb_target_group" "nlb_target_group" {
 
   target_type = "instance"
 
-  # RabbitMQ does not have a health check port for TCP,
-  # we are using the RabbitMQ API instead to test nodes health
+  # RabbitMQ does not have a health check endppoint for TCP
+  # instead, we are using the RabbitMQ API to test nodes health
   health_check {
     protocol            = "HTTP"
     port                = 15672
@@ -30,7 +29,6 @@ resource "aws_lb_target_group" "nlb_target_group" {
   }
 }
 
-# NLB Listener
 resource "aws_lb_listener" "nlb_listener" {
   load_balancer_arn = aws_lb.network_lb.arn
   port              = 80

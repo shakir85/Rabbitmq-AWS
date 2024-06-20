@@ -1,4 +1,3 @@
-# Bastion host EC2 instance to allow managing instances in private subnets
 resource "aws_instance" "bastion_host" {
   ami                         = var.ami_id
   instance_type               = var.ec2_instance_type
